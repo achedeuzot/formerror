@@ -1,0 +1,124 @@
+<div class="md:py-6 bg-gray-100">
+  <div class="mt-0 md:mt-8 sm:mx-auto sm:w-full sm:max-w-md md:max-w-xl xl:max-w-2xl">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <h2 class="mt-6 text-left text-2xl leading-9 font-bold text-gray-900">
+        👋 Welcome
+      </h2>
+      <p class="mt-3 text-gray-700 leading-5">
+        Blabla....
+      </p>
+      <p class="mt-6 text-gray-700 leading-5">
+        Tell us more about you.
+      </p>
+
+      <%= f = form_for @changeset, "#" ,id: "step1-form", phx_change: :validate, phx_submit: :save, class: "mt-6" %>
+      <div class="mt-10 md:mt-16">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          What's your name ?
+        </h3>
+      </div>
+
+      <div class="mt-6 <%= feedback_class(f, :given_name) %>"
+         phx-feedback-for="<%= input_id(f, :given_name) %>">
+        <%= label f, :given_name, "First name", class: "" %>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <%= text_input f, :given_name,
+           placeholder: "Your first name, for example Julie",
+           class: "form-input",
+           autofocus: true %>
+        </div>
+        <%= error_tag f, :given_name %>
+      </div>
+
+      <div class="mt-6 <%= feedback_class(f, :family_name) %>"
+         phx-feedback-for="<%= input_id(f, :family_name) %>">
+        <%= label f, :family_name, "Last name", class: "" %>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <%= text_input f, :family_name,
+            placeholder: "Your last name",
+            class: "form-input" %>
+        </div>
+        <%= error_tag f, :family_name %>
+      </div>
+
+      <div class="mt-10 md:mt-16">
+        <h3 class="mt-7 text-lg leading-6 font-medium text-gray-900">
+          What's your profession ?
+        </h3>
+        <p class="mt-1 text-sm leading-5 text-gray-500">
+          Some details about ...
+        </p>
+      </div>
+
+      <div class="mt-6 <%= feedback_class(f, :profession) %>"
+         phx-feedback-for="<%= input_id(f, :profession) %>">
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <%= select f, :profession,
+            FormerrorsWeb.Step1Form.get_profession_choices(),
+            prompt: "I'm a ...",
+            class: "form-select opform-select" %>
+        </div>
+        <%= error_tag f, :profession %>
+      </div>
+
+      <%= if f.source.changes[:profession] == "other" do %>
+      <div class="mt-6 <%= feedback_class(f, :profession_other) %>"
+         phx-feedback-for="<%= input_id(f, :profession_other) %>">
+        <%= label f, :profession_other, "Votre profession personnalisée", class: "" %>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <%= text_input f, :profession_other,
+            placeholder: "For example: student, doctor, lawyer, ...",
+            class: "form-input " %>
+        </div>
+        <%= error_tag f, :profession_other %>
+      </div>
+      <% end %>
+
+      <div class="mt-10 md:mt-16">
+        <h3 class="mt-7 text-lg leading-6 font-medium text-gray-900">
+          How did you hear about us ?
+        </h3>
+        <p class="mt-1 text-sm leading-5 text-gray-500">
+          Tell us and we'll make it all better.
+        </p>
+      </div>
+
+      <div class="mt-6 <%= feedback_class(f, :user_expectation) %>"
+         phx-feedback-for="<%= input_id(f, :user_expectation) %>">
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          <div class="w-full flex rounded-md shadow-sm">
+            <%= textarea f, :user_expectation,
+              placeholder: "...",
+              rows: 5,
+              class: "form-textarea opform-textarea" %>
+          </div>
+          <%= error_tag f, :user_expectation %>
+        </div>
+      </div>
+
+      <div class="w-full border-b mt-10"></div>
+
+      <div class="mt-6 <%= feedback_class(f, :accepted_terms) %>"
+         phx-feedback-for="<%= input_id(f, :accepted_terms) %>">
+        <div class="flex items-center">
+          <%= checkbox f, :accepted_terms,
+            class: "form-checkbox opform-checkbox" %>
+          <label for="<%= input_id(f, :accepted_terms) %>" class="opform-checkbox-label">
+            I accept the
+            <a target="_blank" href="<%= Routes.page_path(@socket, :index) %>"
+               class="font-medium text-teal-600 hover:text-teal-500 focus:outline-none focus:underline transition ease-in-out duration-150">terms</a>
+          </label>
+        </div>
+        <div>
+          <%= error_tag f, :accepted_terms %>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <%= submit "Continue", class: "form-submit", phx_disable_with: "Validating..."  %>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
