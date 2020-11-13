@@ -16,7 +16,7 @@ defmodule FormerrorsWeb.Live.Step1 do
   def handle_event("validate", %{"step1_form" => params}, socket) do
     changeset =
       Step1Form.changeset(%Step1Form{}, params)
-      |> Map.put(:action, :insert)
+      |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
@@ -33,14 +33,14 @@ defmodule FormerrorsWeb.Live.Step1 do
          |> put_flash(:success, "Your account was updated.")
          |> redirect(to: Routes.page_path(FormerrorsWeb.Endpoint, :index))}
       else
-        {:error, %Ecto.Changeset{}} ->
+        {:error, %Ecto.Changeset{} = changeset} ->
           {:noreply,
            socket
            |> put_flash(:error_account_update, "An error happend.")
-           |> assign(changeset: Map.put(changeset, :action, :insert))}
+           |> assign(changeset: Map.put(changeset, :action, :validate))}
       end
     else
-      {:noreply, assign(socket, changeset: Map.put(changeset, :action, :insert))}
+      {:noreply, assign(socket, changeset: Map.put(changeset, :action, :validate))}
     end
   end
 
