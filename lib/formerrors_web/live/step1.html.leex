@@ -19,7 +19,7 @@
       </div>
 
       <div class="mt-6 <%= feedback_class(f, :given_name) %>"
-         phx-feedback-for="<%= input_id(f, :given_name) %>">
+         phx-feedback-for="<%= input_id(f, :given_name) %>" id="step1-form-given-name-div">
         <%= label f, :given_name, "First name", class: "" %>
         <div class="mt-1 relative rounded-md shadow-sm">
           <%= text_input f, :given_name,
